@@ -118,7 +118,6 @@ const postImageByUser = async (req, res) => {
     const {token} = req.headers
     const {user_id} = decodeToken(token)
     const data = req.body
-    console.log('data: ', data);
     try{
         const newImage = await postImage(data,user_id)    
         newImage ? successCode(res, newImage) : res.status(400).json({

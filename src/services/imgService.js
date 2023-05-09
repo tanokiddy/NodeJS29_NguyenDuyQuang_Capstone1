@@ -178,7 +178,6 @@ const postImage = async (data, user_id) => {
             user_id
         }   
         const newImage = await model.images.create(newData)
-        console.log('newImage: ', newImage);
         return newImage
     } else {
         return false

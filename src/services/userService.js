@@ -78,7 +78,6 @@ const update = async (data,id) => {
             user_id: id
         }
     })
-    console.log('userUpdate: ', userUpdate);
     if(userUpdate) {
         const hashedPW = bcrypt.hashSync(userUpdate.pass_word,10)
         const newData = {

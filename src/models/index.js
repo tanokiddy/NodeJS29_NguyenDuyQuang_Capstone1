@@ -11,12 +11,12 @@ const sequelize = new Sequelize(DATABASE,USERNAME,PASSWORD, {
 
 module.exports = sequelize
 
-// function checkConnect(){ 
-//     try {
-//         sequelize.authenticate()
-//         console.log('success');
-//     } catch(err){
-//         console.log('fail: ', err)
-//     }
-// }
-// checkConnect()
+function checkConnect(){ 
+    try {
+        sequelize.authenticate()
+        console.log('success');
+    } catch(err){
+        console.log('fail: ', err)
+    }
+}
+checkConnect()
