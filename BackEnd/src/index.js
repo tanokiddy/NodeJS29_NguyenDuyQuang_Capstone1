@@ -11,4 +11,3 @@ app.listen(8080)
 
 app.use('/api/v1', rootRouter)
 
-

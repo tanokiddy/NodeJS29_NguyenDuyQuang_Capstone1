@@ -1,6 +1,6 @@
 const { decodeToken } = require("../configs/jwt")
 const { successCode, failCode, notFoundCode } = require("../configs/response")
-const { getImageDetail, getInfoCommentById, checkImageSaveById, saveCommentToImg, getUserDetail, getListImageSaved, getListImageCreated, deleteImage, postImage, getAllImage, findImageByName } = require("../services/imgService")
+const { getImageDetail, getInfoCommentById, checkImageSaveById, saveCommentToImg, getUserDetail, getListImageSaved, getListImageCreated, deleteImage, postImage, getAllImage, findImageByName, updateImage } = require("../services/imgService")
 
 
 const getListImage = async (req, res) => { 
@@ -146,6 +146,17 @@ const editUserProfile = async (req, res) => {
     }
 }
 
+const updateImageById = async (req, res) => { 
+    const data = req.body
+    try {
+        const newImage = await updateImage(data)
+        newImage ? successCode(res) : notFoundCode(res)
+    } catch(err){
+        failCode(res)
+        console.log(err)
+    }
+}
+
 
 module.exports = {
     getListImage,
@@ -159,5 +170,6 @@ module.exports = {
     getListImageCreatedById,
     deleteImageById,
     postImageByUser,
-    editUserProfile
+    editUserProfile,
+    updateImageById
 }

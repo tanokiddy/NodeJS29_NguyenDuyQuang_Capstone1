@@ -1,5 +1,5 @@
 const express = require('express')
-const { getImageInfoByIdImg, getCommentInfoByIdImg, checkSaveImageByIdImg, saveCommentInfoToImg, getUserDetailById, getListImageSavedById, getListImageCreatedById, deleteImageById, postImageByUser, editUserProfile, getListImage, findListImageByName } = require('../controllers/imgController')
+const { getImageInfoByIdImg, getCommentInfoByIdImg, checkSaveImageByIdImg, saveCommentInfoToImg, getUserDetailById, getListImageSavedById, getListImageCreatedById, deleteImageById, postImageByUser, editUserProfile, getListImage, findListImageByName, updateImageById } = require('../controllers/imgController')
 const authentication = require('../controllers/authentication')
 
 const imgRouter = express.Router()
@@ -27,5 +27,7 @@ imgRouter.delete('/deleteImage/:id',authentication, deleteImageById)
 imgRouter.post('/postImage',authentication, postImageByUser)
 
 imgRouter.put('/editProfile',authentication, editUserProfile)
+
+imgRouter.put('/updateImage', updateImageById)
 
 module.exports = imgRouter

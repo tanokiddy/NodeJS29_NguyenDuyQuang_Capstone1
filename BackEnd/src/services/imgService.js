@@ -184,6 +184,34 @@ const postImage = async (data, user_id) => {
     }
 }
 
+const updateImage = async (data) => { 
+    const {image_id, image_url } = data
+    const imageUpdate = await model.images.findOne({
+        where: {
+            image_id,
+        }
+    })
+    if(imageUpdate) {
+        const parseImgName = image_url.split('.')[0].split('/')[2]
+        const newData = {
+            image_name: parseImgName,
+            image_url,
+            description: parseImgName,
+        }
+        const newImage = await model.images.update(
+            newData,
+            {
+                where: {
+                    image_id,
+                }
+            }
+        )
+        return newImage
+    } else {
+        return false
+    }
+}
+
 module.exports = {
     getAllImage,
     findImageByName,
@@ -196,6 +224,7 @@ module.exports = {
     getListImageCreated,
     deleteImage,
     postImage,
+    updateImage
 }
 
 
