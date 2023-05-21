@@ -1,0 +1,2 @@
+export const GET_LIST_IMAGE = 'QK_LIST_IMAGE'
+export const GET_LIST_IMAGE_SEARCH = "QK_IMAGE_SEARCH"

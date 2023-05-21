@@ -1,7 +1,6 @@
 const { create, update, login } = require("../services/userService")
 const { successCode, errorCode, failCode, notFoundCode } = require("../configs/response")
 
-
 const signUp = async (req, res) => { 
     const data = req.body
     try{
@@ -17,10 +16,19 @@ const signUp = async (req, res) => {
 }
 
 const signIn = async (req, res) => {
-    const data = req.body    
+    const data = req.body
     try {
         const newData = await login(data)
-        newData ? successCode(res, newData) : errorCode(res)
+        if(newData){
+            await res.cookie('UUID', `${newData}`, {
+                maxAge: 86400 * 1000, //In miliseconds - Expire: 1 day
+                httpOnly: true,
+                // secure: true,
+            })
+            successCode(res, newData) 
+        } else {
+            errorCode(res)
+        }
     } catch(err){
         errorCode(res, null)
         console.log(err)

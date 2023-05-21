@@ -28,6 +28,6 @@ imgRouter.post('/postImage',authentication, postImageByUser)
 
 imgRouter.put('/editProfile',authentication, editUserProfile)
 
-imgRouter.put('/updateImage', updateImageById)
+imgRouter.put('/updateImage', authentication, updateImageById)
 
 module.exports = imgRouter

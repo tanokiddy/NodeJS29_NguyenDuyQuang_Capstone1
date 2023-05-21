@@ -14,9 +14,9 @@ const getListImage = async (req, res) => {
 }
 
 const findListImageByName = async (req, res) => { 
-    const {image_name} = req.body
+    const {keyword} = req.query
     try{
-        const image = await findImageByName(image_name)
+        const image = await findImageByName(keyword)
         image ? successCode(res, image) : notFoundCode(res)
     }catch(err){
         failCode(res)
@@ -26,7 +26,7 @@ const findListImageByName = async (req, res) => {
 
 
 const getImageInfoByIdImg = async (req, res) => { 
-    const {id} = req.params    
+    const {id} = req.params
     try {
         const data = await getImageDetail(id)
         data ? successCode(res, data) : notFoundCode(res)

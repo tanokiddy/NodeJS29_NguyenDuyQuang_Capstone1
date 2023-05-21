@@ -19,6 +19,8 @@ export const fetcher = (endpoint, options) => {
         })
         .then((response) => {
             resolve(response)
+            return response
+            
         })
         .catch((error) => {
             reject(error)
@@ -29,7 +31,7 @@ export const fetcher = (endpoint, options) => {
 export function get(endpoint, options){
     return fetcher(endpoint, {
         method: "GET",
-        cache: "no-store",  
+        // cache: "no-store",  
         ...options
     })
 }
