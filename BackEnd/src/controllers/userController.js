@@ -1,4 +1,4 @@
-const { create, update, login } = require("../services/userService")
+const { create, update, login, profile, logOut } = require("../services/userService")
 const { successCode, errorCode, failCode, notFoundCode } = require("../configs/response")
 
 const signUp = async (req, res) => { 
@@ -18,14 +18,14 @@ const signUp = async (req, res) => {
 const signIn = async (req, res) => {
     const data = req.body
     try {
-        const newData = await login(data)
-        if(newData){
-            await res.cookie('UUID', `${newData}`, {
+        const accessToken = await login(data)
+        if(accessToken){
+            res.cookie('UUID', accessToken, {
                 maxAge: 86400 * 1000, //In miliseconds - Expire: 1 day
                 httpOnly: true,
                 // secure: true,
             })
-            successCode(res, newData) 
+            successCode(res)
         } else {
             errorCode(res)
         }
@@ -47,8 +47,37 @@ const updateUser = async (req, res) => {
     }
 }
 
+const getProfile = async (req, res) => { 
+    const cookies = req.cookies.UUID
+    try {
+        const user = await profile(cookies)
+        user ? successCode(res, user) : notFoundCode(res)
+    } catch(err){
+        failCode(res)
+        console.log(err)
+    }
+}
+
+const signOut = async (req, res) => { 
+    const cookies = req.cookies.UUID
+    try {
+        const user = await logOut(cookies)
+        if(user){
+            res.clearCookie('UUID')
+            successCode(res)
+        } else {
+            notFoundCode(res)
+        }
+    } catch(err){
+        failCode(res)
+        console.log(err)
+    }
+}
+
 module.exports = {
     signUp,
     signIn,
     updateUser,
+    getProfile,
+    signOut
 }

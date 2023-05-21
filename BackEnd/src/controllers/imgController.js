@@ -17,7 +17,7 @@ const findListImageByName = async (req, res) => {
     const {keyword} = req.query
     try{
         const image = await findImageByName(keyword)
-        image ? successCode(res, image) : notFoundCode(res)
+        successCode(res, image)
     }catch(err){
         failCode(res)
         console.log(err)

@@ -9,7 +9,10 @@ app.disable('x-powered-by')
 
 app.use(express.json())
 app.use(express.static('.'))
-app.use(cors())
+app.use(cors({
+    'origin': '*',
+    'credentials': true
+}))
 app.use(cookieParser())
 app.use('/api/v1', rootRouter)
 

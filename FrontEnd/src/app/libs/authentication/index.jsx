@@ -1,15 +1,15 @@
 'use client'
 
 import React, { createContext, useContext } from 'react'
-import { useQuery } from '@tanstack/react-query'
 import { getUser } from '@/api/common'
+import { useQuery } from 'react-query'
 
 const AuthenticationCtx = createContext(
 	null
 )
 
 export function AuthenticationProvider({ children }) {
-	const { isLoading, data } = useQuery({
+	const { isLoading, data: user } = useQuery({
 		queryKey: ['QUERY_KEY_GET_USER_KEY'],
 		queryFn: getUser,
 		refetchOnWindowFocus: false,
@@ -17,9 +17,8 @@ export function AuthenticationProvider({ children }) {
 	})
 
 	const contextValue = {
-		user: data?.user,
-		isAuth: data?.isAuth,
-		isLoading: isLoading,
+		user,
+		isLoading
 	}
 
 	return (

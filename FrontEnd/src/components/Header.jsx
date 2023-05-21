@@ -9,7 +9,7 @@ import UserInfo from "./UserInfo";
 import { useRouter } from "next/navigation";
 
 export default function Header() {
-  const [searchText,setSearchText] = useState()
+  const [searchText,setSearchText] = useState('')
   const router = useRouter()
   return (
     <div className="p-3 flex flex-row gap-2 justify-between">
@@ -22,7 +22,7 @@ export default function Header() {
 
       <Link
         href="/"
-        className="rounded-full p-2 bg-black text-white max-w-[100px] w-full text-center"
+        className="hidden sm:block rounded-full p-2 bg-black text-white max-w-[100px] w-full text-center"
       >
         <button className="">Home</button>
       </Link>
@@ -48,8 +48,10 @@ export default function Header() {
       </form>
 
       <div className="head-profile flex flex-row items-center gap-2">
-        <AiFillMessage className="w-[24px] h-[24px] cursor-pointer" />
-        <BsBellFill className="w-[24px] h-[24px] cursor-pointer" />
+        <div className="hidden sm:flex flox-row gap-2">
+          <AiFillMessage className="w-[24px] h-[24px] cursor-pointer" />
+          <BsBellFill className="w-[24px] h-[24px] cursor-pointer" />
+        </div>
         <UserInfo />
       </div>
     </div>

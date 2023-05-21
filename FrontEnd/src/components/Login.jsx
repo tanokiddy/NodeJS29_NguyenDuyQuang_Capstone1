@@ -4,11 +4,11 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { handleLogin } from "../api/fetchApi";
 import { useState } from "react";
 import Profile from "./Profile";
-import {RxCross1} from 'react-icons/rx'
+import { RxCross1 } from "react-icons/rx";
 
-export default function Login() {
+export default function Login({ isLoading }) {
   const [isOpen, setOpen] = useState(false);
-  const [isLogin, setLogin] = useState();
+  const [isLogin, setLogin] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,8 +18,9 @@ export default function Login() {
       pass_word: formData.get("password"),
     };
     const response = await handleLogin(data);
-    if (response.content) {
+    if (response.statusCode == 200) {
       setOpen(false);
+      window.location.reload()
     } else {
       setLogin(response.message);
     }
@@ -28,21 +29,33 @@ export default function Login() {
   return (
     <div>
       {/* <Profile/> */}
-      <Dialog.Root open={isOpen} onOpenChange={(open) => { 
-        setOpen(open)
-      }}>
+      <Dialog.Root
+        open={isOpen}
+        onOpenChange={(open) => {
+          setOpen(open);
+        }}
+      >
         <Dialog.Trigger asChild>
-          <button className="py-2 px-4 bg-red-400 text-white rounded-full focus-visible:outline-none">
-            Login
-          </button>
+          {isLoading ? (
+            <button
+              disabled
+              className="py-2 px-4 bg-red-200 text-white rounded-full focus-visible:outline-none"
+            >
+              Login
+            </button>
+          ) : (
+            <button className="py-2 px-4 bg-red-400 text-white rounded-full focus-visible:outline-none">
+              Login
+            </button>
+          )}
         </Dialog.Trigger>
         <Dialog.Portal>
           <Dialog.Overlay className="opacity-80 bg-gray-500 fixed inset-0" />
           <Dialog.Content className="rounded-xl fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] w-[90vw] max-w-[450px] max-h-[85vh] h-[calc(100%-1rem)] p-[25px] focus:outline-none">
             <div className="relative w-full max-w-md max-h-full">
-            <Dialog.Close className="absolute right-[10px] top-[10px] z-[999] focus-visible:outline-none h-[25px] w-[25px] inline-flex rounded-full items-center justify-center hover:bg-gray-300 active:bg-gray-600">
-              <RxCross1/>
-            </Dialog.Close>
+              <Dialog.Close className="absolute right-[10px] top-[10px] z-[999] focus-visible:outline-none h-[25px] w-[25px] inline-flex rounded-full items-center justify-center hover:bg-gray-300 active:bg-gray-600">
+                <RxCross1 />
+              </Dialog.Close>
               <div className="relative bg-white rounded-lg shadow">
                 <div className="px-6 py-6 lg:px-8">
                   <h3 className="mb-10 text-3xl font-bold text-gray-800 text-center">
@@ -54,6 +67,7 @@ export default function Login() {
                     }}
                     className="space-y-6"
                   >
+                    {isLogin && <div className="bg-red-400 rounded-md p-2 font-semibold">{isLogin}</div>}
                     <div>
                       <label
                         htmlFor="email"

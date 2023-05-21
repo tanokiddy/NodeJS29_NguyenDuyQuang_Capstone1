@@ -4,7 +4,7 @@ const sequelize = require('../models')
 const model = initModels(sequelize)
 
 const bcrypt = require('bcrypt')
-const { createToken } = require('../configs/jwt')
+const { createToken, decodeToken } = require('../configs/jwt')
 
 const create = async (data) => { 
     const checkEmail = await model.users.findOne({
@@ -98,10 +98,44 @@ const update = async (data,id) => {
     }
 }
 
+const profile = async (cookies) => { 
+    const data = decodeToken(cookies)
+    const user = await model.users.findOne({
+        where: {
+            user_id: data.user_id
+        }
+    })
+    if(user) {
+        const {avatar,email,full_name,age} = user
+        return {
+            avatar,
+            email,
+            full_name,
+            age
+        }
+    } else {
+        return false
+    }
+}
 
+const logOut = async (cookies) => { 
+    const data = decodeToken(cookies)    
+    const user = await model.users.findOne({
+        where: {
+            user_id: data.user_id
+        }
+    })
+    if(user){
+        return true
+    } else {
+        return false
+    }
+}
 
 module.exports = {
     create,
     login,
     update,
+    profile,
+    logOut
 }

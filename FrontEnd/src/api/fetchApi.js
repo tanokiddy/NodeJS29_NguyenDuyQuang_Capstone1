@@ -8,16 +8,13 @@ export const getListImage = async () => {
 }
 
 export const getImageSearch = async (keyword) => { 
+    console.log('call SearchView')
     return await get(`img/getImage?keyword=${keyword}`)
 }
 
 export const handleLogin = async (data) => { 
     try {
         const response = await post('user/login',data)   
-        if(response.content){
-            const token = response.content
-            Cookies.set('uid', token, {expires: 1})
-        } 
         return response
     } catch(err){
         console.log(err)

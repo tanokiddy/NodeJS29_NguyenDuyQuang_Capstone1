@@ -5,7 +5,7 @@ const API_VERSION = {
 }
 
 const defaultOptions = {
-    // credential: 'include',
+    credentials: 'include',
     headers: {
         'Content-Type': "application/json"
     }
