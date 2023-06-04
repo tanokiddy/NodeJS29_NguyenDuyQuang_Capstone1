@@ -22,7 +22,7 @@ const signIn = async (req, res) => {
         if(accessToken){
             res.cookie('UUID', accessToken, {
                 maxAge: 86400 * 1000, //In miliseconds - Expire: 1 day
-                httpOnly: true,
+                // httpOnly: true,
                 // secure: true,
             })
             successCode(res)
