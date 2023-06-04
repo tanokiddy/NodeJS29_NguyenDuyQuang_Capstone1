@@ -18,11 +18,11 @@ export default function Login({ isLoading }) {
       pass_word: formData.get("password"),
     };
     const response = await handleLogin(data);
-    if (response.statusCode == 200) {
+    if (response?.statusCode == 200) {
       setOpen(false);
-      window.location.reload()
+      // window.location.reload()
     } else {
-      setLogin(response.message);
+      setLogin(response?.message);
     }
   };
 

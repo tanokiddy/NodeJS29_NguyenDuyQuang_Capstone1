@@ -100,6 +100,7 @@ const update = async (data,id) => {
 
 const profile = async (cookies) => { 
     const data = decodeToken(cookies)
+    console.log('data: ', data);
     const user = await model.users.findOne({
         where: {
             user_id: data.user_id
